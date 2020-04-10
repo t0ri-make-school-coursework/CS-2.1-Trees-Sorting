@@ -4,21 +4,19 @@ from sorting_iterative import insertion_sort
 def merge(items1, items2):
     """Merge given lists of items, each assumed to already be in sorted order,
     and return a new list containing all items in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O(n) to go through each index
+    Memory usage: O(n) to create new n-sized array"""
     merged = list()
     
     while len(items1) > 0 and len(items2) > 0:
-        if items1[0] >= items2[0]:
+        if items1[0] > items2[0]:
             merged.append(items2[0])
             items2.pop(0)
-        elif items1[0] < items2[0]:
+        elif items1[0] <= items2[0]:
             merged.append(items1[0])
             items1.pop(0)
 
-    # if len(items1) > 0:
     merged.extend(items1)
-    # elif len(items2) > 0:
     merged.extend(items2)
 
     return merged
@@ -28,27 +26,12 @@ def split_sort_merge(items):
     """Sort given items by splitting list into two approximately equal halves,
     sorting each with an iterative sorting algorithm, and merging results into
     a list in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O(n^2) always, to sort and merge
+    Memory usage: O(n) to create new list (merged)"""
     items1 = insertion_sort(items[:len(items) // 2])
     items2 = insertion_sort(items[len(items) // 2:])
-
-    merged = list()
-
-    while len(items1) > 0 and len(items2) > 0:
-        if items1[0] >= items2[0]:
-            merged.append(items2[0])
-            items2.pop(0)
-        elif items1[0] < items2[0]:
-            merged.append(items1[0])
-            items1.pop(0)
     
-    if len(items1) > 0:
-        for item in items1:
-            merged.append(item)
-    elif len(items2) > 0:
-        for item in items2:
-            merged.append(item)
+    merged = merge(items1, items2)
 
     items[:] = merged
 
@@ -58,16 +41,17 @@ def split_sort_merge(items):
 def merge_sort(items):
     """Sort given items by splitting list into two approximately equal halves,
     sorting each recursively, and merging results into a list in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    if len(items) is 1:
+    Running time: O(n log n), work is divided by 2 each time
+    Memory usage: O(n) to store items"""
+    length = len(items)
+    if length is 1:
         return items
     
-    items1 = merge_sort(items[len(items) // 2:])
-    items2 = merge_sort(items[:len(items) // 2])
-    
-    return merge(items1, items2)
+    items1 = merge_sort(items[:length // 2])
+    items2 = merge_sort(items[length // 2:])
+    items[:] = merge(items1, items2)
 
+    return items
 
 def partition(items, low, high):
     """Return index `p` after in-place partitioning given items in range
