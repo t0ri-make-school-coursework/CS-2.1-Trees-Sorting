@@ -3,8 +3,8 @@
 
 def is_sorted(items):
     """Return a boolean indicating whether given items are in sorted order.
-    Running time: O(n) worst case (True), O(1) best case (False)
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O(n) worst case if returns True
+    Memory usage: O(1) """
     for i, item in enumerate(items):
         if i is not len(items) - 1: # Check if item is last index in array
             if item > items[i + 1]:
@@ -15,31 +15,23 @@ def is_sorted(items):
 def bubble_sort(items):
     """Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
-    Running time: O(n) best case, has to check if in sorted order
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O(n^2) worst case, nested for loop
+    Memory usage: O(1) no new vars"""
     if len(items) is 0:
         return items
     
-    unsorted = True
-    while unsorted:
-        for i, item in enumerate(items):
-            if i is not len(items) - 1: # Check if item is last index in array
-                if item > items[i + 1]:
-                    items[i], items[i + 1] = items[i + 1], items[i]
-            elif is_sorted(items): # Only check if in sorted order at end of array
-                unsorted = False
+    for i in range(len(items)):
+        for j in range(len(items) - i - 1): # Remove looping items in place
+                if items[j] > items[j + 1]:
+                    items[j], items[j + 1] = items[j + 1], items[j]
     return items
 
 
 def selection_sort(items):
     """Sort given items by finding minimum item, swapping it with first
     unsorted item, and repeating until all items are in sorted order.
-    Running time: O(n^2) worst cacse, double loop through all indeces
-    O(n) if list is already sorted
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    if is_sorted(items):
-        return items
-
+    Running time: O(n^2) avg case, double loop through all indeces
+    Memory usage: O(1) 1 var (minimum), swaps in place"""
     for swaps in range(len(items) - 1):
         minimum = items[swaps], swaps
 
@@ -55,8 +47,15 @@ def selection_sort(items):
 def insertion_sort(items):
     """Sort given items by taking first unsorted item, inserting it in sorted
     order in front of items, and repeating until all items are in order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Take first unsorted item
-    # TODO: Insert it in sorted order in front of items
+    Running time: O(n) best case, one loop of all items
+    O(n^2) worst case, if lots of swaps cause index to decrease
+    Memory usage: O(1) 1 var reused"""
+    for index in range(1, len(items)):
+        value = items[index]
+        while index > 0 and items[index - 1] > value:
+            items[index] = items[index - 1]
+            index -= 1 # same index again
+
+        items[index] = value
+
+    return items
