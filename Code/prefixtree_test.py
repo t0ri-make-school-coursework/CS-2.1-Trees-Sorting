@@ -8,9 +8,9 @@ class PrefixTreeTest(unittest.TestCase):
 
     def test_init_and_properties(self):
         tree = PrefixTree()
-        # Verify tree size property
-        assert isinstance(tree.size, int)
-        assert tree.size == 0
+        # Verify tree string_count property
+        assert isinstance(tree.string_count, int)
+        assert tree.string_count == 0
         # Verify root node
         assert isinstance(tree.root, PrefixTreeNode)
         assert tree.root.character == PrefixTree.START_CHARACTER
@@ -140,58 +140,58 @@ class PrefixTreeTest(unittest.TestCase):
         assert node_Z.is_terminal() is True
         assert node_Z.num_children() == 0
 
-    def test_size_and_is_empty(self):
+    def test_string_count_and_is_empty(self):
         tree = PrefixTree()
-        # Verify size after initializing tree
-        assert tree.size == 0
+        # Verify string_count after initializing tree
+        assert tree.string_count == 0
         assert tree.is_empty() is True
-        # Verify size after first insert
+        # Verify string_count after first insert
         tree.insert('A')
-        assert tree.size == 1
+        assert tree.string_count == 1
         assert tree.is_empty() is False
-        # Verify size after second insert
+        # Verify string_count after second insert
         tree.insert('ABC')
-        assert tree.size == 2
+        assert tree.string_count == 2
         assert tree.is_empty() is False
-        # Verify size after third insert
+        # Verify string_count after third insert
         tree.insert('ABD')
-        assert tree.size == 3
+        assert tree.string_count == 3
         assert tree.is_empty() is False
-        # Verify size after fourth insert
+        # Verify string_count after fourth insert
         tree.insert('XYZ')
-        assert tree.size == 4
+        assert tree.string_count == 4
         assert tree.is_empty() is False
 
-    def test_size_with_repeated_insert(self):
+    def test_string_count_with_repeated_insert(self):
         tree = PrefixTree()
-        # Verify size after initializing tree
-        assert tree.size == 0
+        # Verify string_count after initializing tree
+        assert tree.string_count == 0
         assert tree.is_empty() is True
-        # Verify size after first insert
+        # Verify string_count after first insert
         tree.insert('A')
-        assert tree.size == 1
+        assert tree.string_count == 1
         assert tree.is_empty() is False
-        # Verify size after repeating first insert
+        # Verify string_count after repeating first insert
         tree.insert('A')
-        assert tree.size == 1
-        # Verify size after second insert
+        assert tree.string_count == 1
+        # Verify string_count after second insert
         tree.insert('ABC')
-        assert tree.size == 2
-        # Verify size after repeating second insert
+        assert tree.string_count == 2
+        # Verify string_count after repeating second insert
         tree.insert('ABC')
-        assert tree.size == 2
-        # Verify size after third insert
+        assert tree.string_count == 2
+        # Verify string_count after third insert
         tree.insert('ABD')
-        assert tree.size == 3
-        # Verify size after repeating third insert
+        assert tree.string_count == 3
+        # Verify string_count after repeating third insert
         tree.insert('ABD')
-        assert tree.size == 3
-        # Verify size after fourth insert
+        assert tree.string_count == 3
+        # Verify string_count after fourth insert
         tree.insert('XYZ')
-        assert tree.size == 4
-        # Verify size after repeating fourth insert
+        assert tree.string_count == 4
+        # Verify string_count after repeating fourth insert
         tree.insert('XYZ')
-        assert tree.size == 4
+        assert tree.string_count == 4
 
     def test_contains(self):
         strings = ['ABC', 'ABD', 'A', 'XYZ']
